@@ -1,0 +1,65 @@
+#include <stdio.h>
+
+// Structure to store food item details
+typedef struct {
+    int id;
+    char name[30];
+    float price;
+} FoodItem;
+
+int main() {
+    // Available food items
+    FoodItem menu[] = {
+        {1, "Burger", 50.0},
+        {2, "Margherita pizza", 210.0},
+        {3, "Pasta", 120.0},
+        {4, "Veg. Sandwich", 150.0},
+        {5, "Coca-Cola", 40.0},
+        {6, "RedBull", 180.0}
+	};
+    int menuSize = sizeof(menu) / sizeof(menu[0]);
+
+    int choice, quantity;
+    char more;
+    float totalBill = 0;
+
+    printf("\n===== Welcome to K'Charcoal  =====\n");
+
+    do {
+        // Display available food items
+        printf("\nAvailable Food Items:\n");
+        printf("ID   Name       Price\n");
+        printf("----------------------\n");
+        for (int i = 0; i < menuSize; i++) {
+            printf("%d    %-10s %.2f\n", menu[i].id, menu[i].name, menu[i].price);
+        }
+
+        // User selects an item
+        printf("\nEnter the ID of the food item you want to order: ");
+        scanf("%d", &choice);
+
+        // Validate choice
+        if (choice < 1 || choice > menuSize) {
+            printf("Invalid choice! Please try again.\n");
+            continue;
+        }
+
+        printf("Enter quantity: ");
+        scanf("%d", &quantity);
+
+        // Calculate bill
+        totalBill += menu[choice - 1].price * quantity;
+        printf("Added %d x %s to the bill. Current total: %.2f\n", quantity, menu[choice - 1].name, totalBill);
+
+        // Ask if user wants to add more items
+        printf("Do you want to order more? (y/n): ");
+        scanf(" %c", &more);
+    } while (more == 'y' || more == 'Y');
+
+    // Display final bill
+    printf("\n===== Final Bill =====\n");
+    printf("Total Amount: %.2f\n", totalBill);
+    printf("Thank you for your order!\n");
+
+    return 0;
+}
