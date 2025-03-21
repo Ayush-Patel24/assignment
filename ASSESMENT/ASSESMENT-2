@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cstdlib> 
+#include <ctime>   
+using namespace std;
+
+void determineWinner(int userChoice, int computerChoice, int &userScore, int &computerScore) {
+    if (userChoice == computerChoice) {
+        cout << "Draw" << endl;
+    } else if ((userChoice == 1 && computerChoice == 3) || 
+               (userChoice == 2 && computerChoice == 1) || 
+               (userChoice == 3 && computerChoice == 2)) {
+        cout << "You Win!" << endl;
+        userScore++;
+    } else {
+        cout << "Computer Wins!" << endl;
+        computerScore++;
+    }
+}
+
+void playGame(string userName, int rounds) {
+    int userScore = 0, computerScore = 0;
+    srand(time(0)); 
+
+    for (int i = 1; i <= rounds; i++) {
+        cout << "\nRound No : " << i << "/" << rounds << endl;
+        cout << "* " << userName << "'s Score = " << userScore << endl;
+        cout << "* Computer Score = " << computerScore << endl;
+
+        cout << "1) ROCK" << endl;
+        cout << "2) PAPER" << endl;
+        cout << "3) SCISSOR" << endl;
+
+        int userChoice;
+        cout << "-> Select Your Choice : ";
+        cin >> userChoice;
+
+        int computerChoice = (rand() % 3) + 1; 
+        cout << "-> Computer Choice Is : " << computerChoice << endl;
+
+        determineWinner(userChoice, computerChoice, userScore, computerScore);
+
+        cout << "Press Any Key To Continue...";
+        cin.ignore(); // To handle any leftover input
+        cin.get();    // Wait for user input to continue
+    }
+
+    cout << "\nGame Over!" << endl;
+    cout << "* " << userName << "'s Final Score = " << userScore << endl;
+    cout << "* Computer Final Score = " << computerScore << endl;
+
+    if (userScore > computerScore) {
+        cout << "Congratulations! You Won the Game!" << endl;
+    } else if (userScore < computerScore) {
+        cout << "Computer Won the Game!" << endl;
+    } else {
+        cout << "The Game Is Drawn!" << endl;
+    }
+}
+
+int main() {
+    string userName;
+    int rounds;
+
+    cout << "NAME" << endl;
+    cout << "Enter Your Name : ";
+    getline(cin, userName);
+
+    cout << "\nROUNDS" << endl;
+    cout << userName << ", How Many Rounds You Want To Play? : ";
+    cin >> rounds;
+
+
+    playGame(userName, rounds);
+
+    return 0;
+}
